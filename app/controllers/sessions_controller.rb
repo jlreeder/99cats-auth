@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
     if current_user
       current_user.reset_session_token!
       session[:session_token] = nil
+      redirect_to cats_url
     end
   end
 

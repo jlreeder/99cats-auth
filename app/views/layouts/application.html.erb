@@ -8,9 +8,14 @@
 </head>
 <body>
 
+  <header>
   <% if current_user %>
-    <header><%= current_user.user_name %></header>
+    <%= current_user.user_name %>
+    <%= button_to("Log out", session_url, method: :delete) %>
+  <% else %>
+    <%= button_to("Log in", new_session_url, method: :get) %>
   <% end %>
+</header>
 
   <%= yield %>
 
