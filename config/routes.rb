@@ -1,4 +1,10 @@
 NinetyNineCatsDay1::Application.routes.draw do
+  get 'sessions/new'
+
+  get 'sessions/create'
+
+  get 'sessions/destroy'
+
   resources :cats, except: :destroy
   resources :cat_rental_requests, only: [:create, :new] do
     post "approve", on: :member
