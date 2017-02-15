@@ -8,7 +8,11 @@
 </head>
 <body>
 
-<%= yield %>
+  <% if current_user %>
+    <header><%= current_user.user_name %></header>
+  <% end %>
+
+  <%= yield %>
 
 </body>
 </html>
