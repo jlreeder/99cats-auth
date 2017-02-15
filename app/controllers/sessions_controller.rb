@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     if @user
       render text: "Successfully logged in!"
     else
-      flash.now[:errors] << "Invalid credentials"
+      flash.now[:errors] = ["Invalid credentials"]
       render :new
     end
   end
