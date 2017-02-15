@@ -10,7 +10,9 @@ class SessionsController < ApplicationController
     )
 
     if @user
-      render text: "Successfully logged in!"
+      @user.reset_session_token!
+      session[:session_token] = @user.session_token
+      redirect_to cats_url
     else
       flash.now[:errors] = ["Invalid credentials"]
       render :new
