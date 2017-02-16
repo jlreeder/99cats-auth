@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :redirect_to_cats, if: -> { current_user }
-  skip_before_action :redirect_to_cats, only: [:destroy]
+  before_action :redirect_to_cats, except: [:destroy]
 
   def new
     render :new
@@ -37,6 +36,6 @@ class SessionsController < ApplicationController
   end
 
   def redirect_to_cats
-    redirect_to cats_url
+    redirect_to cats_url if current_user
   end
 end
