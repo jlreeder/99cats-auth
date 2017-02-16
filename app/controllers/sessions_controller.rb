@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  before_action :redirect_to_cats, if: -> { current_user }
+  skip_before_action :redirect_to_cats, only: [:destroy]
+
   def new
     render :new
   end
@@ -31,5 +34,9 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:user_name, :password)
+  end
+
+  def redirect_to_cats
+    redirect_to cats_url
   end
 end

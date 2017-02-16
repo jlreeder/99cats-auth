@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :redirect_to_cats, if: -> { current_user }
+
   def new
     render :new
   end
@@ -19,5 +21,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:user_name, :password)
+  end
+
+  def redirect_to_cats
+    redirect_to cats_url
   end
 end
