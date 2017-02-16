@@ -27,7 +27,12 @@ class CatsController < ApplicationController
 
   def edit
     @cat = Cat.find(params[:id])
-    render :edit
+    if current_user && current_user.id == @cat.owner_id
+      render :edit
+    else
+      flash[:errors] = ["You can't edit someone else's cat."]
+      redirect_to cat_url(@cat)
+    end
   end
 
   def update
