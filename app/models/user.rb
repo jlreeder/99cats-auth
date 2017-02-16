@@ -38,8 +38,7 @@ class User < ActiveRecord::Base
 
   def self.find_by_credentials(user_name, password)
     user = User.find_by(user_name: user_name)
-    return user if user.is_password?(password)
-    user.errors[:credentials] << "were bad"
-    nil
+    return nil unless user && user.is_password?(password)
+    user
   end
 end
