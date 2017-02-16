@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
 
   has_many(
     :owned_cats,
+    foreign_key: :owner_id,
     class_name: :Cat
   )
 
