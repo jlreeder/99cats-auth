@@ -18,6 +18,11 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  has_many(
+    :owned_cats,
+    class_name: :Cat
+  )
+
   def ensure_session_token
     self.session_token ||= SecureRandom::urlsafe_base64(16)
   end
