@@ -1,11 +1,14 @@
 class CatsController < ApplicationController
+
+  before_action :find_cat, only: [:show, :edit, :update]
+  before_action :prevent_modification, only: [:edit, :update]
+
   def index
     @cats = Cat.all
     render :index
   end
 
   def show
-    @cat = Cat.find(params[:id])
     render :show
   end
 
@@ -26,17 +29,10 @@ class CatsController < ApplicationController
   end
 
   def edit
-    @cat = Cat.find(params[:id])
-    if current_user && current_user.id == @cat.owner_id
-      render :edit
-    else
-      flash[:errors] = ["You can't edit someone else's cat."]
-      redirect_to cat_url(@cat)
-    end
+    render :edit
   end
 
   def update
-    @cat = Cat.find(params[:id])
     if @cat.update_attributes(cat_params)
       redirect_to cat_url(@cat)
     else
@@ -46,6 +42,17 @@ class CatsController < ApplicationController
   end
 
   private
+
+  def prevent_modification
+    unless current_user && current_user.id == @cat.owner_id
+      flash[:errors] = ["You can't edit someone else's cat."]
+      redirect_to cats_url
+    end
+  end
+
+  def find_cat
+    @cat ||= Cat.find(params[:id])
+  end
 
   def cat_params
     params.require(:cat)
